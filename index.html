@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Vision Board Creator</title>
+    <title>AI Vision Book Creator</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -25,7 +25,7 @@
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            max-width: 1100px;
+            max-width: 1200px;
             width: 100%;
             overflow: hidden;
         }
@@ -47,6 +47,11 @@
         }
         .content {
             padding: 40px;
+            display: flex;
+            gap: 40px;
+        }
+        .left-panel {
+            flex: 1;
         }
         .upload-area {
             border: 2px dashed #2b6cb0;
@@ -80,7 +85,7 @@
         }
         .suggestion-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
         .suggestion-item {
@@ -129,33 +134,43 @@
         .custom-scene button:hover {
             background: #3182ce;
         }
-        .board-preview {
+        .book-preview {
+            flex: 2;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+        .page {
             background: #fff;
             border: 1px solid #edf2f7;
-            padding: 25px;
-            border-radius: 12px;
-            min-height: 350px;
-            margin-bottom: 30px;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        .board-preview p {
-            color: #a0aec0;
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-        .board-preview img {
-            max-width: 200px;
             border-radius: 8px;
-            margin: 5px;
-            position: absolute;
-            cursor: move;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 150px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-        .board-preview img:hover {
-            transform: scale(1.05);
+        .page h4 {
+            font-size: 1em;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .page img {
+            max-width: 100px;
+            border-radius: 6px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .page p {
+            font-size: 0.95em;
+            color: #4a5568;
+            text-align: center;
+            padding: 20px;
         }
         .buy-section {
             text-align: center;
@@ -197,63 +212,61 @@
 <body>
     <div class="container">
         <header>
-            <h1>AI Vision Board Creator</h1>
-            <p>Your Christmas Gift – You & Your Partner Star in Every Scene</p>
+            <h1>AI Vision Book Creator</h1>
+            <p>Your Christmas Gift – 40 Pages of You & Your Partner’s Dreams</p>
         </header>
         <div class="content">
-            <!-- Upload Area -->
-            <div class="upload-area" id="uploadArea">
-                <p>Upload 7+ Photos of You & Your Partner (You’ll Both Shine in the Scenes!)</p>
-                <input type="file" id="imageUpload" accept="image/*" multiple>
-            </div>
-
-            <!-- AI Suggestions -->
-            <div class="suggestions">
-                <h3>Add Scenes Starring You Two</h3>
-                <div class="suggestion-grid">
-                    <div class="suggestion-item" onclick="addToBoard('Us Buying a House')">Us Buying a House</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Getting Married')">Us Getting Married</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Car')">Us Buying a Car</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Getting Fit')">Us Getting Fit</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Having a Baby')">Us Having a Baby</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Starting a Business')">Us Starting a Business</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Traveling the World')">Us Traveling the World</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Renovating a Home')">Us Renovating a Home</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Adopting a Pet')">Us Adopting a Pet</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Winning an Award')">Us Winning an Award</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Paying Off Debt')">Us Paying Off Debt</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Moving Abroad')">Us Moving Abroad</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Celebrating a Milestone')">Us Celebrating a Milestone</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Learning a Skill')">Us Learning a Skill</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Boat')">Us Buying a Boat</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Retiring Early')">Us Retiring Early</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Hosting a Party')">Us Hosting a Party</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Volunteering Together')">Us Volunteering Together</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Growing a Garden')">Us Growing a Garden</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Opening a Café')">Us Opening a Café</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Running a Marathon')">Us Running a Marathon</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Building a Family')">Us Building a Family</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Vacation Home')">Us Buying a Vacation Home</div>
-                    <div class="suggestion-item" onclick="addToBoard('Us Dancing at Our Wedding')">Us Dancing at Our Wedding</div>
+            <!-- Left Panel: Upload & Suggestions -->
+            <div class="left-panel">
+                <div class="upload-area" id="uploadArea">
+                    <p>Upload 7+ Photos of You & Your Partner (You’ll Both Star in the Book!)</p>
+                    <input type="file" id="imageUpload" accept="image/*" multiple>
                 </div>
 
-                <!-- Custom Scene Input -->
-                <div class="custom-scene">
-                    <input type="text" id="customScene" placeholder="Create Your Own (e.g., 'Us on Mars')">
-                    <button onclick="addCustomScene()">Add Custom Scene</button>
+                <div class="suggestions">
+                    <h3>Add Pages Starring You Two</h3>
+                    <div class="suggestion-grid">
+                        <div class="suggestion-item" onclick="addToBook('Us Buying a House')">Us Buying a House</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Getting Married')">Us Getting Married</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Buying a Car')">Us Buying a Car</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Getting Fit')">Us Getting Fit</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Having a Baby')">Us Having a Baby</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Starting a Business')">Us Starting a Business</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Traveling the World')">Us Traveling the World</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Renovating a Home')">Us Renovating a Home</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Adopting a Pet')">Us Adopting a Pet</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Winning an Award')">Us Winning an Award</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Paying Off Debt')">Us Paying Off Debt</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Moving Abroad')">Us Moving Abroad</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Celebrating a Milestone')">Us Celebrating a Milestone</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Learning a Skill')">Us Learning a Skill</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Buying a Boat')">Us Buying a Boat</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Retiring Early')">Us Retiring Early</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Hosting a Party')">Us Hosting a Party</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Volunteering Together')">Us Volunteering Together</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Growing a Garden')">Us Growing a Garden</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Opening a Café')">Us Opening a Café</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Running a Marathon')">Us Running a Marathon</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Building a Family')">Us Building a Family</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Buying a Vacation Home')">Us Buying a Vacation Home</div>
+                        <div class="suggestion-item" onclick="addToBook('Us Dancing at Our Wedding')">Us Dancing at Our Wedding</div>
+                    </div>
+
+                    <div class="custom-scene">
+                        <input type="text" id="customScene" placeholder="Create Your Own (e.g., 'Us on Mars')">
+                        <button onclick="addCustomScene()">Add Custom Page</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Vision Board Preview -->
-            <div class="board-preview" id="boardPreview">
-                <p>Build Your Vision – See You & Your Partner Come to Life!</p>
-            </div>
+            <!-- Right Panel: Book Preview -->
+            <div class="book-preview" id="bookPreview"></div>
         </div>
 
         <!-- Buy Section -->
         <div class="buy-section">
             <div class="price">$19.99</div>
-            <button class="buy-btn" onclick="buyNow()">Buy Your Vision Board</button>
+            <button class="buy-btn" onclick="buyNow()">Buy Your Vision Book</button>
         </div>
 
         <footer>© 2025 xAI • Prototype v1.0 – Crafted for Dreamers</footer>
@@ -261,8 +274,59 @@
 
     <script>
         const uploadArea = document.getElementById('uploadArea');
-        const boardPreview = document.getElementById('boardPreview');
+        const bookPreview = document.getElementById('bookPreview');
         const imageUpload = document.getElementById('imageUpload');
+        let uploadedImages = [];
+        let visionPages = [];
+
+        // Predefined visions and messages
+        const visions = [
+            "Us Buying a House", "Us Getting Married", "Us Buying a Car", "Us Getting Fit",
+            "Us Having a Baby", "Us Starting a Business", "Us Traveling the World", "Us Renovating a Home",
+            "Us Adopting a Pet", "Us Winning an Award", "Us Paying Off Debt", "Us Moving Abroad",
+            "Us Celebrating a Milestone", "Us Learning a Skill", "Us Buying a Boat", "Us Retiring Early",
+            "Us Hosting a Party", "Us Volunteering Together", "Us Growing a Garden", "Us Opening a Café",
+            "Us Running a Marathon", "Us Building a Family", "Us Buying a Vacation Home", "Us Dancing at Our Wedding"
+        ];
+        const loveMessages = [
+            "You’re my favorite person to dream with.", "Every day with you feels like a gift.",
+            "I’d choose you in every lifetime.", "You make my heart stupidly happy.",
+            "We’re building something epic together.", "You’re my safe place, always.",
+            "Loving you is my greatest adventure.", "You’re the reason I believe in forever.",
+            "Together, we’re unstoppable.", "You light up my world every damn day.",
+            "I’m so damn proud to call you mine.", "You’re my partner in crime and cuddles.",
+            "We fit together like perfect chaos.", "You’re my dream come true, no AI needed.",
+            "I love us more than words can say.", "With you, every moment is magic."
+        ];
+
+        // Shuffle array function
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Initialize 40 pages with shuffled visions and messages
+        function initializeBook() {
+            bookPreview.innerHTML = '';
+            const allContent = [...visions, ...loveMessages];
+            const shuffledContent = shuffle(allContent.slice(0, 40)); // Ensure exactly 40 items
+            for (let i = 1; i <= 40; i++) {
+                const page = document.createElement('div');
+                page.className = 'page';
+                const content = shuffledContent[i - 1];
+                page.innerHTML = `<h4>Page ${i}</h4>`;
+                if (visions.includes(content)) {
+                    page.dataset.vision = content;
+                } else {
+                    page.innerHTML += `<p>${content}</p>`;
+                }
+                bookPreview.appendChild(page);
+            }
+        }
+        initializeBook();
 
         uploadArea.addEventListener('click', () => imageUpload.click());
         uploadArea.addEventListener('dragover', (e) => e.preventDefault());
@@ -273,68 +337,69 @@
         imageUpload.addEventListener('change', (e) => handleFiles(e.target.files));
 
         function handleFiles(files) {
-            boardPreview.innerHTML = ''; // Clear placeholder
-            for (let file of files) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.style.left = Math.random() * 800 + 'px';
-                img.style.top = Math.random() * 250 + 'px';
-                makeDraggable(img);
-                boardPreview.appendChild(img);
-            }
+            uploadedImages = Array.from(files).slice(0, 7); // Limit to 7 images
+            updateBookPreview();
         }
 
-        function makeDraggable(element) {
-            let posX = 0, posY = 0, startX, startY;
-            element.onmousedown = dragStart;
-
-            function dragStart(e) {
-                e.preventDefault();
-                startX = e.clientX - posX;
-                startY = e.clientY - posY;
-                document.onmousemove = drag;
-                document.onmouseup = stopDrag;
+        function addToBook(suggestion) {
+            if (visionPages.length < 24) {
+                const pages = bookPreview.getElementsByClassName('page');
+                let added = false;
+                for (let page of pages) {
+                    if (page.dataset.vision && !page.querySelector('img') && !visionPages.includes(page.dataset.vision)) {
+                        page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${suggestion}</h4>`;
+                        if (uploadedImages.length > 0) {
+                            const img = document.createElement('img');
+                            img.src = URL.createObjectURL(uploadedImages[Math.floor(Math.random() * uploadedImages.length)]);
+                            page.appendChild(img);
+                        } else {
+                            page.innerHTML += `<img src="https://via.placeholder.com/100?text=${suggestion}">`;
+                        }
+                        visionPages.push(suggestion);
+                        added = true;
+                        break;
+                    }
+                }
+                if (!added) alert('No more vision pages available!');
+            } else {
+                alert('Max 24 vision pages reached!');
             }
-
-            function drag(e) {
-                posX = e.clientX - startX;
-                posY = e.clientY - startY;
-                element.style.left = posX + 'px';
-                element.style.top = posY + 'px';
-            }
-
-            function stopDrag() {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            }
-        }
-
-        function addToBoard(suggestion) {
-            const img = document.createElement('img');
-            img.src = `https://via.placeholder.com/200?text=${suggestion}`;
-            img.style.left = Math.random() * 800 + 'px';
-            img.style.top = Math.random() * 250 + 'px';
-            makeDraggable(img);
-            boardPreview.appendChild(img);
         }
 
         function addCustomScene() {
             const customInput = document.getElementById('customScene');
             const customText = customInput.value.trim();
-            if (customText) {
-                addToBoard(customText);
-                customInput.value = ''; // Clear input
+            if (customText && visionPages.length < 24) {
+                addToBook(customText);
+                customInput.value = '';
+            } else if (visionPages.length >= 24) {
+                alert('Max 24 vision pages reached!');
             } else {
                 alert('Describe a scene, dreamer!');
             }
         }
 
+        function updateBookPreview() {
+            const pages = bookPreview.getElementsByClassName('page');
+            let imageIndex = 0;
+            for (let page of pages) {
+                if (page.dataset.vision && !page.querySelector('img') && imageIndex < uploadedImages.length) {
+                    page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${page.dataset.vision}</h4>`;
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(uploadedImages[imageIndex]);
+                    page.appendChild(img);
+                    visionPages.push(page.dataset.vision);
+                    imageIndex++;
+                }
+            }
+        }
+
         function buyNow() {
-            const imageCount = boardPreview.getElementsByTagName('img').length;
-            if (imageCount < 1) {
-                alert('Add some photos first – we need you two in the scenes!');
+            const visionCount = visionPages.length;
+            if (visionCount < 1) {
+                alert('Add some photos or visions first – we need you two in the book!');
             } else {
-                alert('Perfect! $19.99 – Your vision board is processing... [Payment TBD]');
+                alert(`Sweet! $19.99 – Your 40-page Vision Book with ${visionCount} visions is processing... [Payment TBD]`);
             }
         }
     </script>

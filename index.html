@@ -201,6 +201,20 @@
             margin-bottom: 15px;
             font-weight: 700;
         }
+        .admin-link {
+            margin-top: 15px;
+            text-align: center;
+            display: none; /* Hidden by default */
+        }
+        .admin-link a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .admin-link a:hover {
+            color: #3182ce;
+        }
         footer {
             text-align: center;
             color: #718096;
@@ -253,6 +267,9 @@
         <div class="buy-section">
             <div class="price">$19.99</div>
             <button class="buy-btn" onclick="buyNow()">Buy Your Vision Book</button>
+            <div class="admin-link" id="adminLink">
+                <a href="admin-panel.html" target="_blank">View Admin Panel (for image prompts)</a>
+            </div>
         </div>
 
         <footer>© 2025 xAI • Prototype v1.0 – Crafted for Dreamers</footer>
@@ -262,6 +279,7 @@
         const uploadArea = document.getElementById('uploadArea');
         const bookPreview = document.getElementById('bookPreview');
         const imageUpload = document.getElementById('imageUpload');
+        const adminLink = document.getElementById('adminLink');
         let uploadedImages = [];
         let visionPages = []; // Array to track added visions
         let visionDetails = {}; // Object to store vision details
@@ -368,6 +386,10 @@
                         }
                         visionPages.push(page.dataset.vision);
                         added = true;
+                        // Show admin link after first vision is added
+                        if (visionPages.length === 1) {
+                            adminLink.style.display = 'block';
+                        }
                         break;
                     }
                 }
@@ -406,6 +428,10 @@
                     page.appendChild(img);
                     visionPages.push(page.dataset.vision);
                     imageIndex++;
+                    // Show admin link after first vision is added
+                    if (visionPages.length === 1) {
+                        adminLink.style.display = 'block';
+                    }
                 }
             }
         }

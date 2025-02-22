@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision Book Creator - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            color: #1a202c;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            max-width: 1000px;
+            width: 100%;
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #2b6cb0, #3182ce);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        .prompt-list {
+            padding: 30px;
+        }
+        .prompt-item {
+            border: 1px solid #edf2f7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f9fafb;
+            transition: all 0.3s ease;
+        }
+        .prompt-item:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .prompt-item h2 {
+            font-size: 1.2em;
+            color: #2b6cb0;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .prompt-item p {
+            font-size: 0.95em;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        .prompt-item .user-detail {
+            font-style: italic;
+            color: #718096;
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9em;
+            padding: 20px;
+            border-top: 1px solid #edf2f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Vision Book Creator - Admin Panel</h1>
+        </header>
+        <div class="prompt-list" id="promptList"></div>
+        <footer>© 2025 xAI • Admin View v1.0 – Generated Prompts for Imaging</footer>
+    </div>
+
+    <script>
+        // Simulated user data (replace with actual backend data later)
+        const userVisions = [
+            { vision: "Us Getting Married", detail: "beach in Hawaii" },
+            { vision: "Us Buying a House", detail: "cozy cabin in the mountains" },
+            { vision: "Us Traveling the World", detail: "Paris" },
+            { vision: "Us Having a Baby", detail: "girl named Luna" },
+            { vision: "Us Starting a Business", detail: "tech startup" },
+            { vision: "Us Buying a Car", detail: "sleek Tesla" },
+            { vision: "Us Getting Fit", detail: "yoga retreat" },
+            { vision: "Us Renovating a Home", detail: "rustic farmhouse" },
+            { vision: "Us Adopting a Pet", detail: "fluffy dog" },
+            { vision: "Us Winning an Award", detail: "Oscar" }
+        ];
+
+        // Function to generate detailed prompt based on vision and user detail
+        function generatePrompt(vision, detail) {
+            let basePrompt = "A beautifully captured close-up of a couple ";
+            let background = "";
+            let specifics = "";
+
+            switch (vision) {
+                case "Us Getting Married":
+                    basePrompt += "on their wedding day, radiating joy as they smile at each other. The groom, dressed in a classic tailored black tuxedo with a crisp white shirt and a sleek black bowtie, has neatly styled hair and a light stubble. The bride wears an elegant white gown with delicate lace detailing on the bodice, a flowing veil, and subtle pearl earrings. Her hair is styled in a soft, romantic updo, with a few loose tendrils framing her face. She holds a bouquet of fresh roses, peonies, and baby’s breath, tied with a silk ribbon matching the wedding’s color scheme.";
+                    background = `The wedding takes place in ${detail}, a stunning venue with breathtaking scenery—perhaps a sunlit beach with waves gently rolling in, a lush garden filled with blooming flowers, or an opulent cathedral with intricate stained glass windows casting colorful light.`;
+                    specifics = "The atmosphere is warm and romantic, with golden sunlight filtering through the setting, creating a dreamy glow. There is a gentle breeze, causing the bride’s veil to flutter slightly.";
+                    break;
+                case "Us Buying a House":
+                    basePrompt += "standing proudly in front of their new home, beaming with excitement. The couple is casually dressed in comfortable yet stylish outfits—perhaps jeans and sweaters—holding a 'Sold' sign together.";
+                    background = `The house is a ${detail}, featuring unique details like wooden beams, large windows, or a wraparound porch, set against a backdrop of rolling hills, a quiet suburban street, or a serene forest.`;
+                    specifics = "The scene is filled with a sense of accomplishment and new beginnings, with golden hour light casting a warm glow over the property.";
+                    break;
+                case "Us Traveling the World":
+                    basePrompt += "exploring a vibrant destination, laughing and holding hands. They’re dressed in travel-ready outfits—light jackets, comfortable shoes, and backpacks—capturing the moment with a selfie.";
+                    background = `The location is ${detail}, with iconic landmarks or natural beauty in the background—think Eiffel Tower silhouettes, bustling markets, or sweeping mountain vistas.`;
+                    specifics = "The air is filled with adventure, and the couple’s excitement is palpable against the exotic backdrop.";
+                    break;
+                case "Us Having a Baby":
+                    basePrompt += "cradling their newborn with tender love, gazing down in awe. The couple is dressed in soft, cozy clothing, sitting in a nursery filled with pastel colors and stuffed animals.";
+                    background = `The baby is a ${detail}, wrapped in a tiny blanket, with a crib or rocking chair subtly visible in the softly blurred background.`;
+                    specifics = "The room glows with soft natural light, creating a peaceful, heartwarming scene.";
+                    break;
+                case "Us Starting a Business":
+                    basePrompt += "celebrating the launch of their new venture, standing side by side with confident smiles. They’re dressed in smart casual attire—perhaps blazers and jeans—holding a sign or product related to their business.";
+                    background = `The business is a ${detail}, set in a modern office, a cozy storefront, or a tech-savvy workspace with blurred employees or customers in the background.`;
+                    specifics = "The atmosphere buzzes with ambition and pride, lit by bright, energetic lighting.";
+                    break;
+                case "Us Buying a Car":
+                    basePrompt += "standing next to their shiny new vehicle, grinning with excitement. They’re dressed in everyday outfits, one holding the keys while the other leans against the car.";
+                    background = `The car is a ${detail}, parked in a scenic spot—maybe a coastal road, a city street, or a mountain overlook—with the landscape softly blurred.`;
+                    specifics = "The sunlight reflects off the car’s surface, highlighting their joy and the thrill of the purchase.";
+                    break;
+                case "Us Getting Fit":
+                    basePrompt += "working out together, full of energy and determination. They’re in fitness gear—sweat-wicking shirts, shorts, and sneakers—mid-action, perhaps lifting weights or stretching.";
+                    background = `The setting is a ${detail}, like a sunlit yoga studio, a bustling gym, or a scenic trail with nature in the blurred background.`;
+                    specifics = "Sweat glistens on their skin, and the scene radiates health and teamwork under vibrant daylight.";
+                    break;
+                case "Us Renovating a Home":
+                    basePrompt += "in the midst of a home project, covered in a bit of paint or dust, smiling at their progress. They wear work clothes—old t-shirts and jeans—holding tools like paint rollers or hammers.";
+                    background = `The home is a ${detail}, with exposed beams, half-painted walls, or furniture in mid-assembly, set against a cozy, lived-in backdrop.`;
+                    specifics = "The scene feels chaotic yet joyful, with warm light streaming through windows, illuminating their shared effort.";
+                    break;
+                case "Us Adopting a Pet":
+                    basePrompt += "playing with their new pet, laughing and full of love. They’re dressed casually, kneeling or sitting on the floor as the pet nuzzles them.";
+                    background = `The pet is a ${detail}, scampering around a homey living room or a grassy park, with toys or a leash faintly visible in the background.`;
+                    specifics = "The mood is playful and tender, with soft natural light enhancing the bond between them.";
+                    break;
+                case "Us Winning an Award":
+                    basePrompt += "holding a prestigious award, beaming with pride on a grand stage. The couple is dressed in formal gala attire—tuxedo and gown—clutching a trophy or plaque.";
+                    background = `The award is a ${detail}, presented in a glamorous venue with a blurred crowd of applauding onlookers and elegant decor.`;
+                    specifics = "Spotlights shine down, casting a triumphant glow, while the couple’s elation steals the scene.";
+                    break;
+                default:
+                    basePrompt += "sharing a special moment together, filled with happiness. They’re dressed in outfits that suit the occasion, standing close and smiling warmly.";
+                    background = `The setting is ${detail}, a unique location or scenario with meaningful elements softly blurred in the background.`;
+                    specifics = "The atmosphere is intimate and joyful, bathed in a warm, golden light.";
+            }
+
+            return `${basePrompt}\n\nIn the softly blurred background, their families or surroundings complement the moment, intentionally out of focus to keep the couple as the focal point. ${background} The atmosphere is warm and vibrant, with golden sunlight or soft lighting creating a dreamy effect. The couple’s happiness is evident in their expressions, and the love between them shines through. The scene is captured with high detail, emphasizing their emotions while the background remains artistically blurred.`;
+        }
+
+        // Populate the prompt list
+        const promptList = document.getElementById('promptList');
+        userVisions.forEach((entry, index) => {
+            const promptItem = document.createElement('div');
+            promptItem.className = 'prompt-item';
+            promptItem.innerHTML = `
+                <h2>Prompt ${index + 1}: ${entry.vision}</h2>
+                <p>${generatePrompt(entry.vision, entry.detail)}</p>
+                <div class="user-detail">User Detail: ${entry.detail}</div>
+            `;
+            promptList.appendChild(promptItem);
+        });
+    </script>
+</body>
+</html>

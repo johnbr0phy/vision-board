@@ -226,30 +226,16 @@
                 <div class="suggestions">
                     <h3>Add Pages Starring You Two</h3>
                     <div class="suggestion-grid">
-                        <div class="suggestion-item" onclick="addToBook('Us Buying a House')">Us Buying a House</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Getting Married')">Us Getting Married</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Buying a Car')">Us Buying a Car</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Getting Fit')">Us Getting Fit</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Having a Baby')">Us Having a Baby</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Starting a Business')">Us Starting a Business</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Traveling the World')">Us Traveling the World</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Renovating a Home')">Us Renovating a Home</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Adopting a Pet')">Us Adopting a Pet</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Winning an Award')">Us Winning an Award</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Paying Off Debt')">Us Paying Off Debt</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Moving Abroad')">Us Moving Abroad</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Celebrating a Milestone')">Us Celebrating a Milestone</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Learning a Skill')">Us Learning a Skill</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Buying a Boat')">Us Buying a Boat</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Retiring Early')">Us Retiring Early</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Hosting a Party')">Us Hosting a Party</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Volunteering Together')">Us Volunteering Together</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Growing a Garden')">Us Growing a Garden</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Opening a Café')">Us Opening a Café</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Running a Marathon')">Us Running a Marathon</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Building a Family')">Us Building a Family</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Buying a Vacation Home')">Us Buying a Vacation Home</div>
-                        <div class="suggestion-item" onclick="addToBook('Us Dancing at Our Wedding')">Us Dancing at Our Wedding</div>
+                        <div class="suggestion-item" data-vision="Us Buying a House">Us Buying a House</div>
+                        <div class="suggestion-item" data-vision="Us Getting Married">Us Getting Married</div>
+                        <div class="suggestion-item" data-vision="Us Buying a Car">Us Buying a Car</div>
+                        <div class="suggestion-item" data-vision="Us Getting Fit">Us Getting Fit</div>
+                        <div class="suggestion-item" data-vision="Us Having a Baby">Us Having a Baby</div>
+                        <div class="suggestion-item" data-vision="Us Starting a Business">Us Starting a Business</div>
+                        <div class="suggestion-item" data-vision="Us Traveling the World">Us Traveling the World</div>
+                        <div class="suggestion-item" data-vision="Us Renovating a Home">Us Renovating a Home</div>
+                        <div class="suggestion-item" data-vision="Us Adopting a Pet">Us Adopting a Pet</div>
+                        <div class="suggestion-item" data-vision="Us Winning an Award">Us Winning an Award</div>
                     </div>
 
                     <div class="custom-scene">
@@ -277,16 +263,14 @@
         const bookPreview = document.getElementById('bookPreview');
         const imageUpload = document.getElementById('imageUpload');
         let uploadedImages = [];
-        let visionPages = [];
+        let visionPages = []; // Array to track added visions
+        let visionDetails = {}; // Object to store vision details
 
-        // Predefined visions and messages
+        // Predefined visions (limited to 10)
         const visions = [
             "Us Buying a House", "Us Getting Married", "Us Buying a Car", "Us Getting Fit",
             "Us Having a Baby", "Us Starting a Business", "Us Traveling the World", "Us Renovating a Home",
-            "Us Adopting a Pet", "Us Winning an Award", "Us Paying Off Debt", "Us Moving Abroad",
-            "Us Celebrating a Milestone", "Us Learning a Skill", "Us Buying a Boat", "Us Retiring Early",
-            "Us Hosting a Party", "Us Volunteering Together", "Us Growing a Garden", "Us Opening a Café",
-            "Us Running a Marathon", "Us Building a Family", "Us Buying a Vacation Home", "Us Dancing at Our Wedding"
+            "Us Adopting a Pet", "Us Winning an Award"
         ];
         const loveMessages = [
             "You’re my favorite person to dream with.", "Every day with you feels like a gift.",
@@ -341,21 +325,48 @@
             updateBookPreview();
         }
 
-        function addToBook(suggestion) {
+        // Add clickable functionality to suggestions
+        document.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const vision = item.dataset.vision;
+                let detailPrompt = '';
+                switch (vision) {
+                    case "Us Buying a House": detailPrompt = "What kind of house would it be? (e.g., cozy cabin, modern condo)"; break;
+                    case "Us Getting Married": detailPrompt = "Where would the wedding be? (e.g., beach in Hawaii, castle in Scotland)"; break;
+                    case "Us Buying a Car": detailPrompt = "What type of car? (e.g., sleek Tesla, rugged Jeep)"; break;
+                    case "Us Getting Fit": detailPrompt = "How would you get fit? (e.g., yoga retreat, marathon training)"; break;
+                    case "Us Having a Baby": detailPrompt = "Boy or girl, and any name ideas? (e.g., girl named Luna)"; break;
+                    case "Us Starting a Business": detailPrompt = "What kind of business? (e.g., coffee shop, tech startup)"; break;
+                    case "Us Traveling the World": detailPrompt = "Where would you go? (e.g., Paris, Tokyo)"; break;
+                    case "Us Renovating a Home": detailPrompt = "What style of home? (e.g., rustic farmhouse, sleek modern)"; break;
+                    case "Us Adopting a Pet": detailPrompt = "What kind of pet? (e.g., fluffy dog, curious cat)"; break;
+                    case "Us Winning an Award": detailPrompt = "What award would it be? (e.g., Oscar, Nobel Prize)"; break;
+                    default: detailPrompt = "Add some details to make it personal!";
+                }
+                const detail = prompt(detailPrompt);
+                if (detail) {
+                    visionDetails[vision] = detail;
+                    addToBook(vision);
+                }
+            });
+        });
+
+        function addToBook(vision) {
             if (visionPages.length < 24) {
                 const pages = bookPreview.getElementsByClassName('page');
                 let added = false;
                 for (let page of pages) {
                     if (page.dataset.vision && !page.querySelector('img') && !visionPages.includes(page.dataset.vision)) {
-                        page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${suggestion}</h4>`;
+                        const detailedVision = visionDetails[vision] ? `${vision} - ${visionDetails[vision]}` : vision;
+                        page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${detailedVision}</h4>`;
                         if (uploadedImages.length > 0) {
                             const img = document.createElement('img');
                             img.src = URL.createObjectURL(uploadedImages[Math.floor(Math.random() * uploadedImages.length)]);
                             page.appendChild(img);
                         } else {
-                            page.innerHTML += `<img src="https://via.placeholder.com/100?text=${suggestion}">`;
+                            page.innerHTML += `<img src="https://via.placeholder.com/100?text=${vision}">`;
                         }
-                        visionPages.push(suggestion);
+                        visionPages.push(page.dataset.vision);
                         added = true;
                         break;
                     }
@@ -370,8 +381,12 @@
             const customInput = document.getElementById('customScene');
             const customText = customInput.value.trim();
             if (customText && visionPages.length < 24) {
-                addToBook(customText);
-                customInput.value = '';
+                const detail = prompt("Add some details to make it personal! (e.g., location, specifics)");
+                if (detail) {
+                    visionDetails[customText] = detail;
+                    addToBook(customText);
+                    customInput.value = '';
+                }
             } else if (visionPages.length >= 24) {
                 alert('Max 24 vision pages reached!');
             } else {
@@ -384,7 +399,8 @@
             let imageIndex = 0;
             for (let page of pages) {
                 if (page.dataset.vision && !page.querySelector('img') && imageIndex < uploadedImages.length) {
-                    page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${page.dataset.vision}</h4>`;
+                    const detailedVision = visionDetails[page.dataset.vision] ? `${page.dataset.vision} - ${visionDetails[page.dataset.vision]}` : page.dataset.vision;
+                    page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${detailedVision}</h4>`;
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(uploadedImages[imageIndex]);
                     page.appendChild(img);
@@ -399,7 +415,12 @@
             if (visionCount < 1) {
                 alert('Add some photos or visions first – we need you two in the book!');
             } else {
-                alert(`Sweet! $19.99 – Your 40-page Vision Book with ${visionCount} visions is processing... [Payment TBD]`);
+                let visionSummary = "Your book includes:\n";
+                visionPages.forEach(vision => {
+                    const detail = visionDetails[vision] || "No extra details";
+                    visionSummary += `- ${vision} - ${detail}\n`;
+                });
+                alert(`Sweet! $19.99 – Your 40-page Vision Book with ${visionCount} personalized visions is processing...\n\n${visionSummary}\n[Payment TBD]`);
             }
         }
     </script>

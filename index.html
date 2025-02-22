@@ -3,147 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Vision Board Shitshow</title>
+    <title>AI Vision Board Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff6f61, #de4d86);
-            color: #333;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fa;
+            color: #2d3748;
             padding: 20px;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
         .container {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            max-width: 1000px;
             width: 100%;
+            overflow: hidden;
         }
-        h1 {
-            font-size: 2.5em;
-            color: #ff6f61;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        p.subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .upload-area {
-            border: 3px dashed #de4d86;
+        header {
+            background: #4c51bf;
+            color: white;
             padding: 20px;
             text-align: center;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            background: #fff5f7;
-            cursor: pointer;
+        }
+        header h1 {
+            font-size: 2em;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .upload-area {
+            border: 2px dashed #4c51bf;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            background: #f9fafb;
+            transition: background 0.2s;
         }
         .upload-area:hover {
-            background: #ffe6ea;
+            background: #eef2ff;
+        }
+        .upload-area p {
+            font-size: 1.1em;
+            color: #4a5568;
         }
         .upload-area input {
             display: none;
         }
         .suggestions {
-            margin: 20px 0;
+            margin: 25px 0;
         }
         .suggestions h3 {
-            color: #de4d86;
-            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #4c51bf;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         .suggestion-item {
             display: inline-block;
-            background: #ff6f61;
+            background: #667eea;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             margin: 5px;
             border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.2s;
+            font-size: 0.9em;
+            transition: background 0.2s, transform 0.2s;
         }
         .suggestion-item:hover {
-            transform: scale(1.05);
+            background: #4c51bf;
+            transform: translateY(-2px);
         }
         .board-preview {
-            background: #f9f9f9;
-            border: 2px solid #ddd;
+            background: #fff;
+            border: 1px solid #e2e8f0;
             padding: 20px;
-            border-radius: 10px;
-            min-height: 200px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            min-height: 300px;
+            margin-bottom: 25px;
             position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .board-preview p {
+            color: #a0aec0;
+            text-align: center;
+            font-size: 1.1em;
         }
         .board-preview img {
-            max-width: 150px;
-            border-radius: 5px;
+            max-width: 180px;
+            border-radius: 6px;
             margin: 5px;
             position: absolute;
             cursor: move;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .buy-section {
+            text-align: center;
         }
         .buy-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: #de4d86;
+            background: #4c51bf;
             color: white;
+            padding: 14px 40px;
             border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
         .buy-btn:hover {
-            background: #ff6f61;
+            background: #434190;
+            transform: translateY(-2px);
+        }
+        .price {
+            font-size: 1.3em;
+            color: #2d3748;
+            margin: 15px 0;
+            font-weight: 600;
         }
         footer {
             text-align: center;
-            color: #666;
-            margin-top: 20px;
+            color: #718096;
             font-size: 0.9em;
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>AI Vision Board Shitshow</h1>
-        <p class="subtitle">Make a badass Christmas gift your partner will treasure!</p>
+        <header>
+            <h1>AI Vision Board Creator</h1>
+            <p>Your Christmas Gift – You & Your Partner Star in Epic Dream Scenes</p>
+        </header>
+        <div class="content">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <p>Upload 7+ Photos of You & Your Partner (You’ll Both Appear in the Scenes!)</p>
+                <input type="file" id="imageUpload" accept="image/*" multiple>
+            </div>
 
-        <!-- Upload Area -->
-        <div class="upload-area" id="uploadArea">
-            <p>Drag some pics of you and your boo here (7+ for best results)</p>
-            <input type="file" id="imageUpload" accept="image/*" multiple>
+            <!-- AI Suggestions -->
+            <div class="suggestions">
+                <h3>Add Scenes Starring You Two</h3>
+                <div class="suggestion-item" onclick="addToBoard('You Two on a Winter Getaway')">Winter Getaway</div>
+                <div class="suggestion-item" onclick="addToBoard('You Two in a Dream Home')">Dream Home</div>
+                <div class="suggestion-item" onclick="addToBoard('You Two with Family Moments')">Family Moments</div>
+                <div class="suggestion-item" onclick="addToBoard('You Two Living Lux')">Luxury Vibes</div>
+            </div>
+
+            <!-- Vision Board Preview -->
+            <div class="board-preview" id="boardPreview">
+                <p>Arrange Your Vision Here – See You & Your Partner in Action!</p>
+            </div>
+
+            <!-- Buy Section -->
+            <div class="buy-section">
+                <div class="price">$19.99 – One-Time Purchase</div>
+                <button class="buy-btn" onclick="buyNow()">Buy Your Vision Board</button>
+            </div>
         </div>
-
-        <!-- AI Suggestions -->
-        <div class="suggestions">
-            <h3>AI Says: Add Some Shit!</h3>
-            <div class="suggestion-item" onclick="addToBoard('Xmas in Lapland')">Xmas in Lapland</div>
-            <div class="suggestion-item" onclick="addToBoard('Dream Cabin')">Dream Cabin</div>
-            <div class="suggestion-item" onclick="addToBoard('Puppy Love')">Puppy Love</div>
-            <div class="suggestion-item" onclick="addToBoard('Fat Stacks')">Fat Stacks</div>
-        </div>
-
-        <!-- Vision Board Preview -->
-        <div class="board-preview" id="boardPreview">
-            <p>Drop your pics and dreams here – drag ‘em around!</p>
-        </div>
-
-        <!-- Buy Button -->
-        <button class="buy-btn" onclick="buyNow()">Buy Now - $19.99</button>
-
-        <footer>Built with love and swearing by xAI • Prototype v1</footer>
+        <footer>© 2025 xAI • Prototype v1.0 – Built for Dreamers</footer>
     </div>
 
     <script>
-        // Basic drag-and-drop and upload handling
         const uploadArea = document.getElementById('uploadArea');
         const boardPreview = document.getElementById('boardPreview');
         const imageUpload = document.getElementById('imageUpload');
@@ -157,12 +195,12 @@
         imageUpload.addEventListener('change', (e) => handleFiles(e.target.files));
 
         function handleFiles(files) {
-            boardPreview.innerHTML = ''; // Clear placeholder text
+            boardPreview.innerHTML = ''; // Clear placeholder
             for (let file of files) {
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
-                img.style.left = Math.random() * 700 + 'px'; // Random position
-                img.style.top = Math.random() * 150 + 'px';
+                img.style.left = Math.random() * 750 + 'px';
+                img.style.top = Math.random() * 200 + 'px';
                 makeDraggable(img);
                 boardPreview.appendChild(img);
             }
@@ -195,15 +233,20 @@
 
         function addToBoard(suggestion) {
             const img = document.createElement('img');
-            img.src = `https://via.placeholder.com/150?text=${suggestion}`; // Placeholder for AI images
-            img.style.left = Math.random() * 700 + 'px';
-            img.style.top = Math.random() * 150 + 'px';
+            img.src = `https://via.placeholder.com/180?text=${suggestion}`;
+            img.style.left = Math.random() * 750 + 'px';
+            img.style.top = Math.random() * 200 + 'px';
             makeDraggable(img);
             boardPreview.appendChild(img);
         }
 
         function buyNow() {
-            alert('Cha-ching! $19.99 – Your partner’s gonna love this shit. [Payment TBD]');
+            const imageCount = boardPreview.getElementsByTagName('img').length;
+            if (imageCount < 1) {
+                alert('Add some photos first – we need you two in the scenes!');
+            } else {
+                alert('Nice one! $19.99 – Your board with you and your partner is processing... [Payment TBD]');
+            }
         }
     </script>
 </body>

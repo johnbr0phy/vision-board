@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision Board Shitshow</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6f61, #de4d86);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ff6f61;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 3px dashed #de4d86;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: #fff5f7;
+            cursor: pointer;
+        }
+        .upload-area:hover {
+            background: #ffe6ea;
+        }
+        .upload-area input {
+            display: none;
+        }
+        .suggestions {
+            margin: 20px 0;
+        }
+        .suggestions h3 {
+            color: #de4d86;
+            margin-bottom: 10px;
+        }
+        .suggestion-item {
+            display: inline-block;
+            background: #ff6f61;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .suggestion-item:hover {
+            transform: scale(1.05);
+        }
+        .board-preview {
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 200px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .board-preview img {
+            max-width: 150px;
+            border-radius: 5px;
+            margin: 5px;
+            position: absolute;
+            cursor: move;
+        }
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #de4d86;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .buy-btn:hover {
+            background: #ff6f61;
+        }
+        footer {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Vision Board Shitshow</h1>
+        <p class="subtitle">Make a badass Christmas gift your partner will treasure!</p>
+
+        <!-- Upload Area -->
+        <div class="upload-area" id="uploadArea">
+            <p>Drag some pics of you and your boo here (7+ for best results)</p>
+            <input type="file" id="imageUpload" accept="image/*" multiple>
+        </div>
+
+        <!-- AI Suggestions -->
+        <div class="suggestions">
+            <h3>AI Says: Add Some Shit!</h3>
+            <div class="suggestion-item" onclick="addToBoard('Xmas in Lapland')">Xmas in Lapland</div>
+            <div class="suggestion-item" onclick="addToBoard('Dream Cabin')">Dream Cabin</div>
+            <div class="suggestion-item" onclick="addToBoard('Puppy Love')">Puppy Love</div>
+            <div class="suggestion-item" onclick="addToBoard('Fat Stacks')">Fat Stacks</div>
+        </div>
+
+        <!-- Vision Board Preview -->
+        <div class="board-preview" id="boardPreview">
+            <p>Drop your pics and dreams here – drag ‘em around!</p>
+        </div>
+
+        <!-- Buy Button -->
+        <button class="buy-btn" onclick="buyNow()">Buy Now - $19.99</button>
+
+        <footer>Built with love and swearing by xAI • Prototype v1</footer>
+    </div>
+
+    <script>
+        // Basic drag-and-drop and upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        const boardPreview = document.getElementById('boardPreview');
+        const imageUpload = document.getElementById('imageUpload');
+
+        uploadArea.addEventListener('click', () => imageUpload.click());
+        uploadArea.addEventListener('dragover', (e) => e.preventDefault());
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
+        imageUpload.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            boardPreview.innerHTML = ''; // Clear placeholder text
+            for (let file of files) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.left = Math.random() * 700 + 'px'; // Random position
+                img.style.top = Math.random() * 150 + 'px';
+                makeDraggable(img);
+                boardPreview.appendChild(img);
+            }
+        }
+
+        function makeDraggable(element) {
+            let posX = 0, posY = 0, startX, startY;
+            element.onmousedown = dragStart;
+
+            function dragStart(e) {
+                e.preventDefault();
+                startX = e.clientX - posX;
+                startY = e.clientY - posY;
+                document.onmousemove = drag;
+                document.onmouseup = stopDrag;
+            }
+
+            function drag(e) {
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                element.style.left = posX + 'px';
+                element.style.top = posY + 'px';
+            }
+
+            function stopDrag() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+
+        function addToBoard(suggestion) {
+            const img = document.createElement('img');
+            img.src = `https://via.placeholder.com/150?text=${suggestion}`; // Placeholder for AI images
+            img.style.left = Math.random() * 700 + 'px';
+            img.style.top = Math.random() * 150 + 'px';
+            makeDraggable(img);
+            boardPreview.appendChild(img);
+        }
+
+        function buyNow() {
+            alert('Cha-ching! $19.99 – Your partner’s gonna love this shit. [Payment TBD]');
+        }
+    </script>
+</body>
+</html>

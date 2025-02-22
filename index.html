@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Vision Board Creator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,136 +12,185 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #f4f7fa;
-            color: #2d3748;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            color: #1a202c;
+            padding: 40px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            max-width: 1000px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            max-width: 1100px;
             width: 100%;
             overflow: hidden;
         }
         header {
-            background: #4c51bf;
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, #2b6cb0, #3182ce);
+            color: #fff;
+            padding: 30px;
             text-align: center;
         }
         header h1 {
-            font-size: 2em;
+            font-size: 2.2em;
             font-weight: 700;
+            letter-spacing: -0.5px;
         }
         header p {
-            font-size: 1.1em;
+            font-size: 1.2em;
             opacity: 0.9;
+            margin-top: 5px;
         }
         .content {
-            padding: 30px;
+            padding: 40px;
         }
         .upload-area {
-            border: 2px dashed #4c51bf;
-            padding: 25px;
+            border: 2px dashed #2b6cb0;
+            padding: 30px;
             text-align: center;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            border-radius: 12px;
             background: #f9fafb;
-            transition: background 0.2s;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
         }
         .upload-area:hover {
-            background: #eef2ff;
+            background: #edf2f7;
+            border-color: #3182ce;
         }
         .upload-area p {
             font-size: 1.1em;
             color: #4a5568;
+            font-weight: 500;
         }
         .upload-area input {
             display: none;
         }
         .suggestions {
-            margin: 25px 0;
+            margin: 30px 0;
         }
         .suggestions h3 {
-            font-size: 1.2em;
-            color: #4c51bf;
-            margin-bottom: 15px;
+            font-size: 1.3em;
+            color: #2b6cb0;
+            margin-bottom: 20px;
             font-weight: 600;
         }
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
         .suggestion-item {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 20px;
+            background: #e2e8f0;
+            color: #2d3748;
+            padding: 12px 20px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 0.9em;
-            transition: background 0.2s, transform 0.2s;
+            font-size: 0.95em;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s ease;
         }
         .suggestion-item:hover {
-            background: #4c51bf;
+            background: #3182ce;
+            color: #fff;
             transform: translateY(-2px);
+        }
+        .custom-scene {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+        .custom-scene input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+        .custom-scene input:focus {
+            border-color: #3182ce;
+            outline: none;
+        }
+        .custom-scene button {
+            background: #2b6cb0;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .custom-scene button:hover {
+            background: #3182ce;
         }
         .board-preview {
             background: #fff;
-            border: 1px solid #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            min-height: 300px;
-            margin-bottom: 25px;
+            border: 1px solid #edf2f7;
+            padding: 25px;
+            border-radius: 12px;
+            min-height: 350px;
+            margin-bottom: 30px;
             position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
         .board-preview p {
             color: #a0aec0;
             text-align: center;
             font-size: 1.1em;
+            font-weight: 500;
         }
         .board-preview img {
-            max-width: 180px;
-            border-radius: 6px;
+            max-width: 200px;
+            border-radius: 8px;
             margin: 5px;
             position: absolute;
             cursor: move;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+        .board-preview img:hover {
+            transform: scale(1.05);
         }
         .buy-section {
             text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-top: 1px solid #edf2f7;
+            border-radius: 0 0 16px 16px;
         }
         .buy-btn {
-            background: #4c51bf;
-            color: white;
-            padding: 14px 40px;
+            background: #2b6cb0;
+            color: #fff;
+            padding: 14px 50px;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
         }
         .buy-btn:hover {
-            background: #434190;
+            background: #3182ce;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .price {
-            font-size: 1.3em;
-            color: #2d3748;
-            margin: 15px 0;
-            font-weight: 600;
+            font-size: 1.5em;
+            color: #1a202c;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
         footer {
             text-align: center;
             color: #718096;
             font-size: 0.9em;
             padding: 20px;
-            border-top: 1px solid #e2e8f0;
         }
     </style>
 </head>
@@ -149,36 +198,65 @@
     <div class="container">
         <header>
             <h1>AI Vision Board Creator</h1>
-            <p>Your Christmas Gift – You & Your Partner Star in Epic Dream Scenes</p>
+            <p>Your Christmas Gift – You & Your Partner Star in Every Scene</p>
         </header>
         <div class="content">
             <!-- Upload Area -->
             <div class="upload-area" id="uploadArea">
-                <p>Upload 7+ Photos of You & Your Partner (You’ll Both Appear in the Scenes!)</p>
+                <p>Upload 7+ Photos of You & Your Partner (You’ll Both Shine in the Scenes!)</p>
                 <input type="file" id="imageUpload" accept="image/*" multiple>
             </div>
 
             <!-- AI Suggestions -->
             <div class="suggestions">
                 <h3>Add Scenes Starring You Two</h3>
-                <div class="suggestion-item" onclick="addToBoard('You Two on a Winter Getaway')">Winter Getaway</div>
-                <div class="suggestion-item" onclick="addToBoard('You Two in a Dream Home')">Dream Home</div>
-                <div class="suggestion-item" onclick="addToBoard('You Two with Family Moments')">Family Moments</div>
-                <div class="suggestion-item" onclick="addToBoard('You Two Living Lux')">Luxury Vibes</div>
+                <div class="suggestion-grid">
+                    <div class="suggestion-item" onclick="addToBoard('Us Buying a House')">Us Buying a House</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Getting Married')">Us Getting Married</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Car')">Us Buying a Car</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Getting Fit')">Us Getting Fit</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Having a Baby')">Us Having a Baby</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Starting a Business')">Us Starting a Business</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Traveling the World')">Us Traveling the World</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Renovating a Home')">Us Renovating a Home</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Adopting a Pet')">Us Adopting a Pet</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Winning an Award')">Us Winning an Award</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Paying Off Debt')">Us Paying Off Debt</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Moving Abroad')">Us Moving Abroad</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Celebrating a Milestone')">Us Celebrating a Milestone</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Learning a Skill')">Us Learning a Skill</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Boat')">Us Buying a Boat</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Retiring Early')">Us Retiring Early</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Hosting a Party')">Us Hosting a Party</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Volunteering Together')">Us Volunteering Together</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Growing a Garden')">Us Growing a Garden</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Opening a Café')">Us Opening a Café</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Running a Marathon')">Us Running a Marathon</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Building a Family')">Us Building a Family</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Buying a Vacation Home')">Us Buying a Vacation Home</div>
+                    <div class="suggestion-item" onclick="addToBoard('Us Dancing at Our Wedding')">Us Dancing at Our Wedding</div>
+                </div>
+
+                <!-- Custom Scene Input -->
+                <div class="custom-scene">
+                    <input type="text" id="customScene" placeholder="Create Your Own (e.g., 'Us on Mars')">
+                    <button onclick="addCustomScene()">Add Custom Scene</button>
+                </div>
             </div>
 
             <!-- Vision Board Preview -->
             <div class="board-preview" id="boardPreview">
-                <p>Arrange Your Vision Here – See You & Your Partner in Action!</p>
-            </div>
-
-            <!-- Buy Section -->
-            <div class="buy-section">
-                <div class="price">$19.99 – One-Time Purchase</div>
-                <button class="buy-btn" onclick="buyNow()">Buy Your Vision Board</button>
+                <p>Build Your Vision – See You & Your Partner Come to Life!</p>
             </div>
         </div>
-        <footer>© 2025 xAI • Prototype v1.0 – Built for Dreamers</footer>
+
+        <!-- Buy Section -->
+        <div class="buy-section">
+            <div class="price">$19.99</div>
+            <button class="buy-btn" onclick="buyNow()">Buy Your Vision Board</button>
+        </div>
+
+        <footer>© 2025 xAI • Prototype v1.0 – Crafted for Dreamers</footer>
     </div>
 
     <script>
@@ -199,8 +277,8 @@
             for (let file of files) {
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
-                img.style.left = Math.random() * 750 + 'px';
-                img.style.top = Math.random() * 200 + 'px';
+                img.style.left = Math.random() * 800 + 'px';
+                img.style.top = Math.random() * 250 + 'px';
                 makeDraggable(img);
                 boardPreview.appendChild(img);
             }
@@ -233,11 +311,22 @@
 
         function addToBoard(suggestion) {
             const img = document.createElement('img');
-            img.src = `https://via.placeholder.com/180?text=${suggestion}`;
-            img.style.left = Math.random() * 750 + 'px';
-            img.style.top = Math.random() * 200 + 'px';
+            img.src = `https://via.placeholder.com/200?text=${suggestion}`;
+            img.style.left = Math.random() * 800 + 'px';
+            img.style.top = Math.random() * 250 + 'px';
             makeDraggable(img);
             boardPreview.appendChild(img);
+        }
+
+        function addCustomScene() {
+            const customInput = document.getElementById('customScene');
+            const customText = customInput.value.trim();
+            if (customText) {
+                addToBoard(customText);
+                customInput.value = ''; // Clear input
+            } else {
+                alert('Describe a scene, dreamer!');
+            }
         }
 
         function buyNow() {
@@ -245,7 +334,7 @@
             if (imageCount < 1) {
                 alert('Add some photos first – we need you two in the scenes!');
             } else {
-                alert('Nice one! $19.99 – Your board with you and your partner is processing... [Payment TBD]');
+                alert('Perfect! $19.99 – Your vision board is processing... [Payment TBD]');
             }
         }
     </script>

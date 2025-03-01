@@ -3,452 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Vision Book Creator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Drug Simulation Game</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f5f5;
-            color: #1a202c;
-            padding: 40px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            max-width: 1200px;
-            width: 100%;
-            overflow: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, #2b6cb0, #3182ce);
-            color: #fff;
-            padding: 30px;
+            font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f0f0f0;
+            margin: 20px;
+            transition: background-color 0.5s;
         }
-        header h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-        .content {
-            padding: 40px;
-            display: flex;
-            gap: 40px;
-        }
-        .left-panel {
-            flex: 1;
-        }
-        .upload-area {
-            border: 2px dashed #2b6cb0;
-            padding: 30px;
-            text-align: center;
-            border-radius: 12px;
-            background: #f9fafb;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-        }
-        .upload-area:hover {
-            background: #edf2f7;
-            border-color: #3182ce;
-        }
-        .upload-area p {
-            font-size: 1.1em;
-            color: #4a5568;
-            font-weight: 500;
-        }
-        .upload-area input {
-            display: none;
-        }
-        .suggestions {
-            margin: 30px 0;
-        }
-        .suggestions h3 {
-            font-size: 1.3em;
-            color: #2b6cb0;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        .suggestion-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .suggestion-item {
-            background: #e2e8f0;
-            color: #2d3748;
-            padding: 12px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.95em;
-            font-weight: 500;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-        .suggestion-item:hover {
-            background: #3182ce;
-            color: #fff;
-            transform: translateY(-2px);
-        }
-        .custom-scene {
-            margin-top: 25px;
-            display: flex;
-            gap: 12px;
-        }
-        .custom-scene input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.2s;
-        }
-        .custom-scene input:focus {
-            border-color: #3182ce;
-            outline: none;
-        }
-        .custom-scene button {
-            background: #2b6cb0;
-            color: #fff;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-        .custom-scene button:hover {
-            background: #3182ce;
-        }
-        .book-preview {
-            flex: 2;
-            max-height: 600px;
-            overflow-y: auto;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 12px;
-        }
-        .page {
-            background: #fff;
-            border: 1px solid #edf2f7;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            min-height: 150px;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        .page h4 {
-            font-size: 1em;
-            color: #2b6cb0;
+        h1 {
+            font-size: 24px;
             margin-bottom: 10px;
-            font-weight: 600;
         }
-        .page img {
-            max-width: 100px;
-            border-radius: 6px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+        #effect-wrapper {
+            transition: all 0.5s;
         }
-        .page p {
-            font-size: 0.95em;
-            color: #4a5568;
-            text-align: center;
-            padding: 20px;
+        #game-container {
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .buy-section {
-            text-align: center;
-            padding: 20px;
-            background: #f9fafb;
-            border-top: 1px solid #edf2f7;
-            border-radius: 0 0 16px 16px;
+        #highness-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border: 1px solid #000;
+            position: relative;
+            margin-bottom: 20px;
         }
-        .buy-btn {
-            background: #2b6cb0;
-            color: #fff;
-            padding: 14px 50px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            font-weight: 600;
+        #highness-fill {
+            height: 100%;
+            width: 50%; /* Starts at 0 (-100 to 100 maps to 0-100%) */
+            background-color: #00ff00;
+            transition: width 0.5s, background-color 0.5s;
+        }
+        #status {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        #message {
+            font-size: 16px;
+            color: #333;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
         }
-        .buy-btn:hover {
-            background: #3182ce;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        button:hover {
+            background-color: #0056b3;
         }
-        .price {
-            font-size: 1.5em;
-            color: #1a202c;
-            margin-bottom: 15px;
-            font-weight: 700;
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
-        .admin-link {
-            margin-top: 15px;
-            text-align: center;
-            display: none; /* Hidden by default */
+        #time {
+            font-size: 16px;
+            margin-top: 10px;
         }
-        .admin-link a {
-            color: #2b6cb0;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
+
+        /* Drug Effects */
+        .effect-acid {
+            animation: hueRotate 5s infinite linear;
         }
-        .admin-link a:hover {
-            color: #3182ce;
+        @keyframes hueRotate {
+            from { filter: hue-rotate(0deg); }
+            to { filter: hue-rotate(360deg); }
         }
-        footer {
-            text-align: center;
-            color: #718096;
-            font-size: 0.9em;
-            padding: 20px;
+        .effect-weed {
+            filter: blur(5px);
+        }
+        .effect-cocaine {
+            animation: vibrate 0.1s infinite;
+        }
+        @keyframes vibrate {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+        }
+        .effect-heroin {
+            filter: blur(2px);
+            text-shadow: 0 0 5px #fff;
+        }
+        .effect-ecstasy {
+            /* Handled in JavaScript for flashing colors */
+        }
+        .effect-shrooms {
+            filter: invert(100%) hue-rotate(180deg);
+        }
+        .effect-meth {
+            text-shadow: 2px 0 0 red, -2px 0 0 blue;
+        }
+        .effect-ketamine {
+            transform: scale(0.8);
+            border: 20px solid black;
+        }
+        .effect-pcp {
+            animation: shake 0.5s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-10px, 10px); }
+            20% { transform: translate(10px, -10px); }
+            30% { transform: translate(-10px, 10px); }
+            40% { transform: translate(10px, -10px); }
+            50% { transform: translate(0, 0); }
+            60% { transform: translate(-5px, 5px); }
+            70% { transform: translate(5px, -5px); }
+            80% { transform: translate(-5px, 5px); }
+            90% { transform: translate(5px, -5px); }
+            100% { transform: translate(0, 0); }
+        }
+        .effect-dmt {
+            animation: hueRotateFast 1s infinite linear;
+            filter: brightness(1.5) contrast(1.5);
+        }
+        @keyframes hueRotateFast {
+            from { filter: hue-rotate(0deg); }
+            to { filter: hue-rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>AI Vision Book Creator</h1>
-            <p>Your Christmas Gift – 40 Pages of You & Your Partner’s Dreams</p>
-        </header>
-        <div class="content">
-            <!-- Left Panel: Upload & Suggestions -->
-            <div class="left-panel">
-                <div class="upload-area" id="uploadArea">
-                    <p>Upload 7+ Photos of You & Your Partner (You’ll Both Star in the Book!)</p>
-                    <input type="file" id="imageUpload" accept="image/*" multiple>
-                </div>
-
-                <div class="suggestions">
-                    <h3>Add Pages Starring You Two</h3>
-                    <div class="suggestion-grid">
-                        <div class="suggestion-item" data-vision="Us Buying a House">Us Buying a House</div>
-                        <div class="suggestion-item" data-vision="Us Getting Married">Us Getting Married</div>
-                        <div class="suggestion-item" data-vision="Us Buying a Car">Us Buying a Car</div>
-                        <div class="suggestion-item" data-vision="Us Getting Fit">Us Getting Fit</div>
-                        <div class="suggestion-item" data-vision="Us Having a Baby">Us Having a Baby</div>
-                        <div class="suggestion-item" data-vision="Us Starting a Business">Us Starting a Business</div>
-                        <div class="suggestion-item" data-vision="Us Traveling the World">Us Traveling the World</div>
-                        <div class="suggestion-item" data-vision="Us Renovating a Home">Us Renovating a Home</div>
-                        <div class="suggestion-item" data-vision="Us Adopting a Pet">Us Adopting a Pet</div>
-                        <div class="suggestion-item" data-vision="Us Winning an Award">Us Winning an Award</div>
-                    </div>
-
-                    <div class="custom-scene">
-                        <input type="text" id="customScene" placeholder="Create Your Own (e.g., 'Us on Mars')">
-                        <button onclick="addCustomScene()">Add Custom Page</button>
-                    </div>
-                </div>
+    <div id="effect-wrapper">
+        <div id="game-container">
+            <h1>Drug Simulation Game</h1>
+            <div id="highness-bar">
+                <div id="highness-fill"></div>
             </div>
-
-            <!-- Right Panel: Book Preview -->
-            <div class="book-preview" id="bookPreview"></div>
-        </div>
-
-        <!-- Buy Section -->
-        <div class="buy-section">
-            <div class="price">$19.99</div>
-            <button class="buy-btn" onclick="buyNow()">Buy Your Vision Book</button>
-            <div class="admin-link" id="adminLink">
-                <a href="admin-panel.html" target="_blank">View Admin Panel (for image prompts)</a>
+            <div id="status">Highness: 0</div>
+            <div id="message"></div>
+            <div id="drug-buttons">
+                <button onclick="takeDrug('acid')">Acid</button>
+                <button onclick="takeDrug('weed')">Weed</button>
+                <button onclick="takeDrug('cocaine')">Cocaine</button>
+                <button onclick="takeDrug('heroin')">Heroin</button>
+                <button onclick="takeDrug('ecstasy')">Ecstasy</button>
+                <button onclick="takeDrug('shrooms')">Shrooms</button>
+                <button onclick="takeDrug('meth')">Meth</button>
+                <button onclick="takeDrug('ketamine')">Ketamine</button>
+                <button onclick="takeDrug('pcp')">PCP</button>
+                <button onclick="takeDrug('dmt')">DMT</button>
             </div>
+            <button id="reset-btn">Reset Game</button>
+            <div id="time">Time Elapsed: 0s</div>
         </div>
-
-        <footer>© 2025 xAI • Prototype v1.0 – Crafted for Dreamers</footer>
     </div>
 
     <script>
-        const uploadArea = document.getElementById('uploadArea');
-        const bookPreview = document.getElementById('bookPreview');
-        const imageUpload = document.getElementById('imageUpload');
-        const adminLink = document.getElementById('adminLink');
-        let uploadedImages = [];
-        let visionPages = []; // Array to track added visions
-        let visionDetails = {}; // Object to store vision details
+        // Game state variables
+        let highness = 0;
+        let tolerance = 0;
+        let timeElapsed = 0;
+        let gameOver = false;
+        let intervalId = null;
+        let ecstasyInterval = null;
 
-        // Predefined visions (limited to 10)
-        const visions = [
-            "Us Buying a House", "Us Getting Married", "Us Buying a Car", "Us Getting Fit",
-            "Us Having a Baby", "Us Starting a Business", "Us Traveling the World", "Us Renovating a Home",
-            "Us Adopting a Pet", "Us Winning an Award"
-        ];
-        const loveMessages = [
-            "You’re my favorite person to dream with.", "Every day with you feels like a gift.",
-            "I’d choose you in every lifetime.", "You make my heart stupidly happy.",
-            "We’re building something epic together.", "You’re my safe place, always.",
-            "Loving you is my greatest adventure.", "You’re the reason I believe in forever.",
-            "Together, we’re unstoppable.", "You light up my world every damn day.",
-            "I’m so damn proud to call you mine.", "You’re my partner in crime and cuddles.",
-            "We fit together like perfect chaos.", "You’re my dream come true, no AI needed.",
-            "I love us more than words can say.", "With you, every moment is magic."
-        ];
+        // DOM elements
+        const effectWrapper = document.getElementById('effect-wrapper');
+        const highnessFill = document.getElementById('highness-fill');
+        const status = document.getElementById('status');
+        const message = document.getElementById('message');
+        const timeDisplay = document.getElementById('time');
+        const body = document.body;
 
-        // Shuffle array function
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Initialize 40 pages with shuffled visions and messages
-        function initializeBook() {
-            bookPreview.innerHTML = '';
-            const allContent = [...visions, ...loveMessages];
-            const shuffledContent = shuffle(allContent.slice(0, 40)); // Ensure exactly 40 items
-            for (let i = 1; i <= 40; i++) {
-                const page = document.createElement('div');
-                page.className = 'page';
-                const content = shuffledContent[i - 1];
-                page.innerHTML = `<h4>Page ${i}</h4>`;
-                if (visions.includes(content)) {
-                    page.dataset.vision = content;
-                } else {
-                    page.innerHTML += `<p>${content}</p>`;
-                }
-                bookPreview.appendChild(page);
+        // Start the game timer
+        function startGame() {
+            if (!intervalId) {
+                intervalId = setInterval(updateGame, 1000); // Update every second
             }
         }
-        initializeBook();
 
-        uploadArea.addEventListener('click', () => imageUpload.click());
-        uploadArea.addEventListener('dragover', (e) => e.preventDefault());
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            handleFiles(e.dataTransfer.files);
+        // Update game state
+        function updateGame() {
+            if (gameOver) return;
+
+            // Decrease highness based on tolerance
+            const decreaseRate = 2 + 0.2 * tolerance;
+            highness -= decreaseRate;
+            updateHighness();
+
+            // Increment time
+            timeElapsed++;
+            timeDisplay.textContent = `Time Elapsed: ${timeElapsed}s`;
+
+            // Check game over conditions
+            if (highness > 100) {
+                endGame('Overdose: Game Over');
+            } else if (highness < -100) {
+                endGame('Severe Withdrawal: Game Over');
+            }
+        }
+
+        // Update highness display and background color
+        function updateHighness() {
+            // Map highness (-100 to 100) to percentage (0% to 100%)
+            const percentage = ((highness + 100) / 200) * 100;
+            highnessFill.style.width = `${percentage}%`;
+            status.textContent = `Highness: ${Math.round(highness)}`;
+
+            // Update background color based on highness
+            if (highness >= 80) {
+                body.style.backgroundColor = '#e0ffe0'; // Green
+            } else if (highness >= 50) {
+                body.style.backgroundColor = '#fff5e0'; // Yellow
+            } else if (highness >= 0) {
+                body.style.backgroundColor = '#f0f0f0'; // Gray
+            } else {
+                body.style.backgroundColor = '#ffe0e0'; // Red
+            }
+        }
+
+        // Take drug action
+        function takeDrug(drug) {
+            if (gameOver) return;
+            startGame();
+
+            // Calculate highness increase with tolerance
+            const baseIncrease = 80 + (Math.random() * 20 - 10); // 70-90
+            const increase = baseIncrease / (1 + tolerance / 10);
+            highness += increase;
+            tolerance += 1; // Increase tolerance each dose
+            updateHighness();
+
+            // Apply drug effect
+            applyEffect(drug);
+        }
+
+        // Apply visual effect for the selected drug
+        function applyEffect(drug) {
+            // Remove any existing effect
+            effectWrapper.classList.remove('effect-acid', 'effect-weed', 'effect-cocaine', 'effect-heroin', 'effect-shrooms', 'effect-meth', 'effect-ketamine', 'effect-pcp', 'effect-dmt');
+            if (ecstasyInterval) {
+                clearInterval(ecstasyInterval);
+                ecstasyInterval = null;
+                effectWrapper.style.backgroundColor = '';
+            }
+
+            // Apply the new effect
+            if (drug === 'ecstasy') {
+                ecstasyInterval = setInterval(() => {
+                    effectWrapper.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                }, 200);
+                setTimeout(() => {
+                    clearInterval(ecstasyInterval);
+                    ecstasyInterval = null;
+                    effectWrapper.style.backgroundColor = '';
+                }, 10000);
+            } else {
+                effectWrapper.classList.add(`effect-${drug}`);
+                setTimeout(() => {
+                    effectWrapper.classList.remove(`effect-${drug}`);
+                }, 10000);
+            }
+        }
+
+        // Reset game
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            highness = 0;
+            tolerance = 0;
+            timeElapsed = 0;
+            gameOver = false;
+            clearInterval(intervalId);
+            intervalId = null;
+            effectWrapper.classList.remove('effect-acid', 'effect-weed', 'effect-cocaine', 'effect-heroin', 'effect-shrooms', 'effect-meth', 'effect-ketamine', 'effect-pcp', 'effect-dmt');
+            if (ecstasyInterval) {
+                clearInterval(ecstasyInterval);
+                ecstasyInterval = null;
+                effectWrapper.style.backgroundColor = '';
+            }
+            updateHighness();
+            timeDisplay.textContent = 'Time Elapsed: 0s';
+            message.textContent = '';
+            body.style.backgroundColor = '#f0f0f0';
+            document.querySelectorAll('#drug-buttons button').forEach(btn => btn.disabled = false);
         });
-        imageUpload.addEventListener('change', (e) => handleFiles(e.target.files));
 
-        function handleFiles(files) {
-            uploadedImages = Array.from(files).slice(0, 7); // Limit to 7 images
-            updateBookPreview();
+        // End game
+        function endGame(endMessage) {
+            gameOver = true;
+            clearInterval(intervalId);
+            intervalId = null;
+            message.textContent = endMessage;
+            // Disable drug buttons
+            document.querySelectorAll('#drug-buttons button').forEach(btn => btn.disabled = true);
         }
 
-        // Add clickable functionality to suggestions
-        document.querySelectorAll('.suggestion-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const vision = item.dataset.vision;
-                let detailPrompt = '';
-                switch (vision) {
-                    case "Us Buying a House": detailPrompt = "What kind of house would it be? (e.g., cozy cabin, modern condo)"; break;
-                    case "Us Getting Married": detailPrompt = "Where would the wedding be? (e.g., beach in Hawaii, castle in Scotland)"; break;
-                    case "Us Buying a Car": detailPrompt = "What type of car? (e.g., sleek Tesla, rugged Jeep)"; break;
-                    case "Us Getting Fit": detailPrompt = "How would you get fit? (e.g., yoga retreat, marathon training)"; break;
-                    case "Us Having a Baby": detailPrompt = "Boy or girl, and any name ideas? (e.g., girl named Luna)"; break;
-                    case "Us Starting a Business": detailPrompt = "What kind of business? (e.g., coffee shop, tech startup)"; break;
-                    case "Us Traveling the World": detailPrompt = "Where would you go? (e.g., Paris, Tokyo)"; break;
-                    case "Us Renovating a Home": detailPrompt = "What style of home? (e.g., rustic farmhouse, sleek modern)"; break;
-                    case "Us Adopting a Pet": detailPrompt = "What kind of pet? (e.g., fluffy dog, curious cat)"; break;
-                    case "Us Winning an Award": detailPrompt = "What award would it be? (e.g., Oscar, Nobel Prize)"; break;
-                    default: detailPrompt = "Add some details to make it personal!";
-                }
-                const detail = prompt(detailPrompt);
-                if (detail) {
-                    visionDetails[vision] = detail;
-                    addToBook(vision);
-                }
-            });
-        });
-
-        function addToBook(vision) {
-            if (visionPages.length < 24) {
-                const pages = bookPreview.getElementsByClassName('page');
-                let added = false;
-                for (let page of pages) {
-                    if (page.dataset.vision && !page.querySelector('img') && !visionPages.includes(page.dataset.vision)) {
-                        const detailedVision = visionDetails[vision] ? `${vision} - ${visionDetails[vision]}` : vision;
-                        page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${detailedVision}</h4>`;
-                        if (uploadedImages.length > 0) {
-                            const img = document.createElement('img');
-                            img.src = URL.createObjectURL(uploadedImages[Math.floor(Math.random() * uploadedImages.length)]);
-                            page.appendChild(img);
-                        } else {
-                            page.innerHTML += `<img src="https://via.placeholder.com/100?text=${vision}">`;
-                        }
-                        visionPages.push(page.dataset.vision);
-                        added = true;
-                        // Show admin link after first vision is added
-                        if (visionPages.length === 1) {
-                            adminLink.style.display = 'block';
-                        }
-                        break;
-                    }
-                }
-                if (!added) alert('No more vision pages available!');
-            } else {
-                alert('Max 24 vision pages reached!');
-            }
-        }
-
-        function addCustomScene() {
-            const customInput = document.getElementById('customScene');
-            const customText = customInput.value.trim();
-            if (customText && visionPages.length < 24) {
-                const detail = prompt("Add some details to make it personal! (e.g., location, specifics)");
-                if (detail) {
-                    visionDetails[customText] = detail;
-                    addToBook(customText);
-                    customInput.value = '';
-                }
-            } else if (visionPages.length >= 24) {
-                alert('Max 24 vision pages reached!');
-            } else {
-                alert('Describe a scene, dreamer!');
-            }
-        }
-
-        function updateBookPreview() {
-            const pages = bookPreview.getElementsByClassName('page');
-            let imageIndex = 0;
-            for (let page of pages) {
-                if (page.dataset.vision && !page.querySelector('img') && imageIndex < uploadedImages.length) {
-                    const detailedVision = visionDetails[page.dataset.vision] ? `${page.dataset.vision} - ${visionDetails[page.dataset.vision]}` : page.dataset.vision;
-                    page.innerHTML = `<h4>Page ${Array.from(pages).indexOf(page) + 1}: ${detailedVision}</h4>`;
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(uploadedImages[imageIndex]);
-                    page.appendChild(img);
-                    visionPages.push(page.dataset.vision);
-                    imageIndex++;
-                    // Show admin link after first vision is added
-                    if (visionPages.length === 1) {
-                        adminLink.style.display = 'block';
-                    }
-                }
-            }
-        }
-
-        function buyNow() {
-            const visionCount = visionPages.length;
-            if (visionCount < 1) {
-                alert('Add some photos or visions first – we need you two in the book!');
-            } else {
-                let visionSummary = "Your book includes:\n";
-                visionPages.forEach(vision => {
-                    const detail = visionDetails[vision] || "No extra details";
-                    visionSummary += `- ${vision} - ${detail}\n`;
-                });
-                alert(`Sweet! $19.99 – Your 40-page Vision Book with ${visionCount} personalized visions is processing...\n\n${visionSummary}\n[Payment TBD]`);
-            }
-        }
+        // Initialize game
+        updateHighness();
     </script>
 </body>
 </html>
